@@ -1,0 +1,23 @@
+{
+  "name": "db4-project",
+  "version": "1.0.0",
+  "description": "Follow these steps to set up and work on your project:",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reubenPalumbo/node-db4-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reubenPalumbo/node-db4-project/issues"
+  },
+  "homepage": "https://github.com/reubenPalumbo/node-db4-project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  }
+}
