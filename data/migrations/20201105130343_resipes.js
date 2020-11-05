@@ -16,23 +16,23 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("resipes")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+        .onUpdate("RESTRICT")
+        .onDelete("RESTRICT");
       tbl
         .integer("ingredient_id")
         .unsigned()
         .notNullable()
         .references("id")
         .inTable("indgredients")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+        .onUpdate("RESTRICT")
+        .onDelete("RESTRICT");
       tbl.integer("quantity").notNullable();
     });
 };
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("resipes")
+    .dropTableIfExists("link_R-I")
     .dropTableIfExists("indgredients")
-    .dropTableIfExists("link_R-I");
+    .dropTableIfExists("resipes");
 };

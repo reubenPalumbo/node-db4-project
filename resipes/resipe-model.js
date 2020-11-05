@@ -1,20 +1,14 @@
 const db = require("../data/db-config");
 
 module.exports = {
-  find() {
+  getRecipes() {
     return db("resipes");
   },
-  findById(id) {
-    return db("resipes").where({ id }).first();
-  },
-
-  add(scheme) {
-    return db("resipes").insert(account);
-  },
-  update(changes, id) {
-    return db("resipes").where({ id }).update(account);
-  },
-  remove(id) {
-    return db("resipes").where({ id }).del();
+  getShoppingList(recipe_id) {
+    return db("resipes as r")
+      .join("link_R-I as l", "r.id", "l.resipes_id")
+      .join("indgredients as i", "i.id", "l.ingredient_id")
+      .select("i.ingredient_name", "l.quantity")
+      .where({ "r.id": recipe_id });
   },
 };

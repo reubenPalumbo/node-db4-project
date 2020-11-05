@@ -1,10 +1,7 @@
-const colName = "resipe_name";
-
 exports.seed = function (knex) {
-  // Deletes ALL existing entries
   return knex("resipes").insert([
-    { colName: "Cake" },
-    { colName: "Bread" },
-    { colName: "Mushroom Stew" },
+    { resipe_name: "Cake" },
+    { resipe_name: "Bread" },
+    { resipe_name: "Mushroom Stew" },
   ]);
 };

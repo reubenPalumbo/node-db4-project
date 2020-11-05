@@ -5,40 +5,22 @@ const Recipe = require("./resipe-model.js");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Recipe.find()
-    .then((Recipe) => {
-      res.json(Recipe);
+  Recipe.getRecipes()
+    .then((recipe) => {
+      res.json(recipe);
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to get Recipe" });
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id/ingred", (req, res) => {
   const { id } = req.params;
 
-  Recipe.findById(id)
-    .then((scheme) => {
-      if (scheme) {
-        res.json(scheme);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to get Recipe" });
-    });
-});
-
-router.get("/:id/steps", (req, res) => {
-  const { id } = req.params;
-
-  Recipe.findSteps(id)
-    .then((steps) => {
-      if (steps.length) {
-        res.json(steps);
+  Recipe.getShoppingList(id)
+    .then((ingred) => {
+      if (ingred.length) {
+        res.json(ingred);
       } else {
         res
           .status(404)
@@ -47,80 +29,6 @@ router.get("/:id/steps", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
-    });
-});
-
-router.post("/", (req, res) => {
-  const schemeData = req.body;
-
-  Recipe.add(schemeData)
-    .then((scheme) => {
-      res.status(201).json(scheme);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to create new scheme" });
-    });
-});
-
-router.post("/:id/steps", (req, res) => {
-  const stepData = req.body;
-  const { id } = req.params;
-
-  Recipe.findById(id)
-    .then((scheme) => {
-      if (scheme) {
-        return Recipe.addStep(stepData, id);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id." });
-      }
-    })
-    .then((step) => {
-      res.status(201).json(step);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to create new step" });
-    });
-});
-
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
-
-  Recipe.findById(id)
-    .then((scheme) => {
-      if (scheme) {
-        return Recipe.update(changes, id);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id" });
-      }
-    })
-    .then((updatedScheme) => {
-      res.json(updatedScheme);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to update scheme" });
-    });
-});
-
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
-  Recipe.remove(id)
-    .then((deleted) => {
-      if (deleted) {
-        res.json({ removed: deleted });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to delete scheme" });
     });
 });
 
