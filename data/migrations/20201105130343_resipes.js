@@ -27,6 +27,26 @@ exports.up = function (knex) {
         .onUpdate("RESTRICT")
         .onDelete("RESTRICT");
       tbl.integer("quantity").notNullable();
+    })
+    .createTable("steps", (tbl) => {
+      tbl.increments();
+      tbl
+        .integer("resipes_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("resipes")
+        .onUpdate("RESTRICT")
+        .onDelete("RESTRICT");
+      tbl.integer("slot").unsigned().notNullable();
+      tbl
+        .integer("ingredient_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("indgredients")
+        .onUpdate("RESTRICT")
+        .onDelete("RESTRICT");
     });
 };
 

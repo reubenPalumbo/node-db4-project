@@ -32,4 +32,22 @@ router.get("/:id/ingred", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Recipe.getInstructions(id)
+    .then((ingred) => {
+      if (ingred.length) {
+        res.json(ingred);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find steps for given scheme" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
+});
+
 module.exports = router;
